@@ -5,6 +5,7 @@
 package lineas;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -89,6 +90,69 @@ public class lienzo extends Canvas {
         figuras.addElement(new Vector(puntos));
         puntos.clear();
     }
-    
+    public  void  moverFiguara(int fig, String dir){
+        if(puntosAux.size()>0){
+            figuras.addElement(new Vector(puntos));
+            puntos.clear();
+        }
+        puntosAux = (Vector) figuras.elementAt(fig-1);
+
+        switch (dir){
+            case "Izq":
+                if(punto.x-10<0){
+                    break;
+                }else {
+                    for(int r =0; r<puntosAux.size(); r++){
+                        punto = (Point) puntosAux.elementAt(r);
+                        punto.x-=10;
+                        puntosAux.indexOf(punto, r);
+                    }
+                    figuras.indexOf(puntosAux, fig-1);
+                    break;
+                }
+
+            case "Der":
+                if(punto.x+10>700){
+                    break;
+                }else {
+                    for(int r =0; r<puntosAux.size(); r++){
+                        punto = (Point) puntosAux.elementAt(r);
+                        punto.x+=10;
+                        puntosAux.indexOf(punto, r);
+                    }
+                    figuras.indexOf(puntosAux, fig-1);
+                    break;
+                }
+
+            case "Arriba":
+                if(punto.y-10<0){
+                    break;
+                }else{
+                    for(int r =0; r<puntosAux.size(); r++){
+                        punto = (Point) puntosAux.elementAt(r);
+                        punto.y-=10;
+                        puntosAux.indexOf(punto, r);
+                    }
+                    figuras.indexOf(puntosAux, fig-1);
+                    break;
+                }
+
+            case "Abajo":
+                if(punto.y+10>700){
+                    break;
+                }else {
+                    for(int r =0; r<puntosAux.size(); r++){
+                        punto = (Point) puntosAux.elementAt(r);
+                        punto.y+=10;
+                        puntosAux.indexOf(punto, r);
+                    }
+                    figuras.indexOf(puntosAux, fig-1);
+                    break;
+                }
+
+            default:
+        }
+        this.repaint();
+    }
 
 }

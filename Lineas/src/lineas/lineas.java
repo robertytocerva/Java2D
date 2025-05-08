@@ -92,7 +92,25 @@ public class lineas extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-        System.out.println(evt.getKeyCode());
+        //System.out.println(evt.getKeyCode());
+
+        switch (evt.getKeyCode()){
+            case 37:
+                lienzo.moverFiguara(Integer.parseInt(jTextField1.getText()),"Izq");
+                break;
+            case 38:
+                lienzo.moverFiguara(Integer.parseInt(jTextField1.getText()),"Arriba");
+                break;
+            case 40:
+                lienzo.moverFiguara(Integer.parseInt(jTextField1.getText()),"Abajo");
+                break;
+            case 39:
+                lienzo.moverFiguara(Integer.parseInt(jTextField1.getText()),"Der");
+                break;
+            default:
+                System.out.println("Tecla no valida");
+                break;
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     /**
