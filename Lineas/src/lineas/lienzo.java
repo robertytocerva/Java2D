@@ -14,7 +14,7 @@ import java.util.Vector;
 public class lienzo extends Canvas {
     private Vector puntos = new Vector();
     private Point punto = new Point();
-    private Vector PuntosAux = new Vector();
+    private  Vector puntosAux = new Vector();
     private Vector figuras = new Vector();
 
     @Override
@@ -24,43 +24,35 @@ public class lienzo extends Canvas {
         g2d.setStroke(new BasicStroke(3));
         g2d.setColor(Color.pink);
 
-        if(figuras.size()>0)
-        {
-            for (int j = 0; j < figuras.size(); j++)
-            {
-                PuntosAux = (Vector)figuras.elementAt(0);
+        if(figuras.size()>0){
 
-                for(int r =0; r<PuntosAux.size(); r++){
-                    punto = (Point) PuntosAux.elementAt(r);
-                    g.fillOval((int)punto.getX()-5,(int)punto.getY()-5,10,10); //circulos rellenos
+            for(int f = 0; f<figuras.size(); f++){
+                puntosAux = (Vector) figuras.elementAt(f);
 
+                for(int r =0; r<puntosAux.size(); r++){
+                    punto = (Point) puntosAux.elementAt(r);
+                    g.fillOval((int)punto.getX()-5,(int)punto.getY()-5,10,10);
 
-                    if(r>0)
-                    {
-                        Point puntoAnterior = (Point)PuntosAux.elementAt(r-1);
-                        g.drawLine(puntoAnterior.x, puntoAnterior.y, punto.x, punto.y);
-
+                    if(r>0) {
+                        Point puntoAux = new  Point();
+                        puntoAux = (Point) puntosAux.elementAt(r-1);
+                        g.drawLine((int) punto.getX(),(int) punto.getY(),(int) puntoAux.getX(),(int) puntoAux.getY());
                     }
                 }
-
             }
         }
-//        super.paint(g);
-//        Graphics2D g2d = (Graphics2D) g;
-//        g2d.setStroke(new BasicStroke(3));
-//        g2d.setColor(Color.pink);
+
 
         for(int r =0; r<puntos.size(); r++){
             punto = (Point) puntos.elementAt(r);
+            g.fillOval((int)punto.getX()-5,(int)punto.getY()-5,10,10);
 
-
-            if(r>0)
-            {
-                Point puntoAnterior = (Point)puntos.elementAt(r-1);
-                g.drawLine(puntoAnterior.x, puntoAnterior.y, punto.x, punto.y);
+            if(r>0) {
+                Point puntoAux = new  Point();
+                puntoAux = (Point) puntos.elementAt(r-1);
+                g.drawLine((int) punto.getX(),(int) punto.getY(),(int) puntoAux.getX(),(int) puntoAux.getY());
 
             }
-            g.fillOval((int)punto.getX()-5,(int)punto.getY()-5,10,10);
         }
 
 
@@ -93,24 +85,10 @@ public class lienzo extends Canvas {
         return  false;
     }
 
-    public void limpiar(){
+    public void nuevaFigura(){
         figuras.addElement(new Vector(puntos));
         puntos.clear();
     }
     
-public void MoverFigura(int fig, String dir)
-    {
-        PuntosAux = (Vector)figuras.elementAt(fig-1);
-        
-        if(dir == "Izq")
-        {
-            for (int r = 0; r < 10; r++) 
-            {
-                punto = (Point) PuntosAux.elementAt(r);
-                punto.x = punto.x-5;
-                PuntosAux.indexOf(punto, r);
-            }
-            figuras.indexOf(PuntosAux,fig-1);
-        }
-    }
+
 }
