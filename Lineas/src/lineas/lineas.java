@@ -92,7 +92,7 @@ public class lineas extends javax.swing.JFrame {
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
-        //System.out.println(evt.getKeyCode());
+        //LSystem.out.println(evt.getKeyCode());
 
         switch (evt.getKeyCode()){
             case 37:
