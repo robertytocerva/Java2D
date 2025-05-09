@@ -19,7 +19,7 @@ public class lineas extends javax.swing.JFrame {
         initComponents();
         
         lienzo.setBounds(10,10,700,700);
-        lienzo.setBackground(Color.CYAN);
+        lienzo.setBackground(Color.black);
         this.add(lienzo);
         this.setBounds(0,0,800,800);
         
