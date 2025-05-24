@@ -90,69 +90,109 @@ public class lienzo extends Canvas {
         figuras.addElement(new Vector(puntos));
         puntos.clear();
     }
-    public  void  moverFiguara(int fig, String dir){
-        if(puntosAux.size()>0){
+
+    public void moverFiguara(int fig, String dir) {
+        if (puntosAux.size() > 0) {
             figuras.addElement(new Vector(puntos));
             puntos.clear();
         }
-        puntosAux = (Vector) figuras.elementAt(fig-1);
 
-        switch (dir){
-            case "Izq":
-                if(punto.x-10<0){
-                    break;
-                }else {
-                    for(int r =0; r<puntosAux.size(); r++){
-                        punto = (Point) puntosAux.elementAt(r);
-                        punto.x-=10;
-                        puntosAux.indexOf(punto, r);
-                    }
-                    figuras.indexOf(puntosAux, fig-1);
-                    break;
-                }
+        puntosAux = (Vector) figuras.elementAt(fig - 1);
 
-            case "Der":
-                if(punto.x+10>700){
-                    break;
-                }else {
-                    for(int r =0; r<puntosAux.size(); r++){
-                        punto = (Point) puntosAux.elementAt(r);
-                        punto.x+=10;
-                        puntosAux.indexOf(punto, r);
-                    }
-                    figuras.indexOf(puntosAux, fig-1);
-                    break;
-                }
+        int dx = 0, dy = 0;
 
-            case "Arriba":
-                if(punto.y-10<0){
-                    break;
-                }else{
-                    for(int r =0; r<puntosAux.size(); r++){
-                        punto = (Point) puntosAux.elementAt(r);
-                        punto.y-=10;
-                        puntosAux.indexOf(punto, r);
-                    }
-                    figuras.indexOf(puntosAux, fig-1);
-                    break;
-                }
-
-            case "Abajo":
-                if(punto.y+10>700){
-                    break;
-                }else {
-                    for(int r =0; r<puntosAux.size(); r++){
-                        punto = (Point) puntosAux.elementAt(r);
-                        punto.y+=10;
-                        puntosAux.indexOf(punto, r);
-                    }
-                    figuras.indexOf(puntosAux, fig-1);
-                    break;
-                }
-
-            default:
+        switch (dir) {
+            case "Izq": dx = -5; break;
+            case "Der": dx = 5; break;
+            case "Arriba": dy = -5; break;
+            case "Abajo": dy = 5; break;
+            default: return;
         }
+
+        // Verificar que ningún punto salga del lienzo
+        for (int r = 0; r < puntosAux.size(); r++) {
+            Point p = (Point) puntosAux.elementAt(r);
+            int nuevoX = p.x + dx;
+            int nuevoY = p.y + dy;
+            if (nuevoX < 0 || nuevoX > 700 || nuevoY < 0 || nuevoY > 700) {
+                return; // Detener si algún punto saldría del lienzo
+            }
+        }
+
+        // Si todo está bien, mover todos los puntos
+        for (int r = 0; r < puntosAux.size(); r++) {
+            Point p = (Point) puntosAux.elementAt(r);
+            p.x += dx;
+            p.y += dy;
+        }
+
+        figuras.set(fig - 1, puntosAux); // Actualizar figura
         this.repaint();
     }
+
+//    public  void  moverFiguara(int fig, String dir){
+//        if(puntosAux.size()>0){
+//            figuras.addElement(new Vector(puntos));
+//            puntos.clear();
+//        }
+//        puntosAux = (Vector) figuras.elementAt(fig-1);
+//
+//        switch (dir){
+//            case "Izq":
+//                if(punto.x-10<0){
+//                    break;
+//                }else {
+//                    for(int r =0; r<puntosAux.size(); r++){
+//                        punto = (Point) puntosAux.elementAt(r);
+//                        punto.x-=10;
+//                        puntosAux.indexOf(punto, r);
+//                    }
+//                    figuras.indexOf(puntosAux, fig-1);
+//                    break;
+//                }
+//
+//            case "Der":
+//                if(punto.x+10>700){
+//                    break;
+//                }else {
+//                    for(int r =0; r<puntosAux.size(); r++){
+//                        punto = (Point) puntosAux.elementAt(r);
+//                        punto.x+=10;
+//                        puntosAux.indexOf(punto, r);
+//                    }
+//                    figuras.indexOf(puntosAux, fig-1);
+//                    break;
+//                }
+//
+//            case "Arriba":
+//                if(punto.y-10<0){
+//                    break;
+//                }else{
+//                    for(int r =0; r<puntosAux.size(); r++){
+//                        punto = (Point) puntosAux.elementAt(r);
+//                        punto.y-=10;
+//                        puntosAux.indexOf(punto, r);
+//                    }
+//                    figuras.indexOf(puntosAux, fig-1);
+//                    break;
+//                }
+//
+//            case "Abajo":
+//                if(punto.y+10>700){
+//                    break;
+//                }else {
+//                    for(int r =0; r<puntosAux.size(); r++){
+//                        punto = (Point) puntosAux.elementAt(r);
+//                        punto.y+=10;
+//                        puntosAux.indexOf(punto, r);
+//                    }
+//                    figuras.indexOf(puntosAux, fig-1);
+//                    break;
+//                }
+//
+//            default:
+//        }
+//        this.repaint();
+//    }
 
 }
