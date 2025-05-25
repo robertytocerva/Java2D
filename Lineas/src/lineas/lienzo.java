@@ -128,6 +128,36 @@ public class lienzo extends Canvas {
 
         figuras.set(fig - 1, puntosAux); // Actualizar figura
         this.repaint();
+        chocar(fig);
+    }
+
+    public  boolean chocar(int numFig){
+        puntosAux = (Vector) figuras.elementAt(numFig-1);
+
+        for(int r =0; r<puntosAux.size(); r++){
+            punto = (Point) puntosAux.elementAt(r);
+            Vector puntosFigComparar = new Vector();
+            for(int nFig =0; nFig<figuras.size(); nFig++){
+                if (nFig != numFig-1){
+                    puntosFigComparar = (Vector) figuras.elementAt(nFig);
+                    int x1 = 500, x2 =0, y1 = 500, y2 =0;
+                    for (int p = 0; p < puntosFigComparar.size(); p++) {
+                        Point puntoAux = new Point();
+                        puntoAux = (Point) puntosFigComparar.elementAt(p);
+                        if(puntoAux.x<x1) x1=puntoAux.x;
+                        if(puntoAux.x>x2) x2=puntoAux.x;
+                        if(puntoAux.y<y1) y1=puntoAux.y;
+                        if(puntoAux.y>y2) y2=puntoAux.y;
+                    }
+                    if (punto.x>x1 && punto.x<x2 && punto.y>y1 && punto.y<y2){
+                        System.out.println("Choco con la figura: " + ((int)nFig+1));
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
     }
 
 //    public  void  moverFiguara(int fig, String dir){
