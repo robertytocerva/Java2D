@@ -4,7 +4,7 @@
  */
 package PaintJava;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *
@@ -21,7 +21,9 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
         lienzo.setBackground(Color.BLACK);
         this.add(lienzo);
         this.setBounds(10, 10, 1100, 1000);
-        
+
+        lienzo.addMouseListener(mouseListener);
+
     }
 
     /**
@@ -56,10 +58,10 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtRotindEjeX = new javax.swing.JTextField();
-        btnRotindEjeY = new javax.swing.JTextField();
+        txtRotindEjeY = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnGirarRespectoPunto = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
 
         jLabel5.setText("jLabel5");
@@ -119,6 +121,11 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
         });
 
         btnRotPunto.setText("Iniciar");
+        btnRotPunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRotPuntoActionPerformed(evt);
+            }
+        });
 
         txtSelectFigEsc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,15 +147,44 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
 
         jLabel9.setText("Deg");
 
+        txtRotIndFig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRotIndFigActionPerformed(evt);
+            }
+        });
+
+        txtRotIndDeg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRotIndDegActionPerformed(evt);
+            }
+        });
+
         jLabel10.setText("Fig");
 
         jLabel11.setText("Deg");
+
+        txtRotindEjeX.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRotindEjeXActionPerformed(evt);
+            }
+        });
+
+        txtRotindEjeY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRotindEjeYActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("X");
 
         jLabel13.setText("Y");
 
-        jButton1.setText("Girar");
+        btnGirarRespectoPunto.setText("Girar");
+        btnGirarRespectoPunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGirarRespectoPuntoActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Rotación");
 
@@ -202,11 +238,11 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                     .addComponent(txtRotIndDeg, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(btnGirarRespectoPunto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                     .addComponent(txtRotindEjeX, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(btnRotindEjeY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(txtRotindEjeY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                         .addContainerGap()))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(jLabel2)
@@ -282,9 +318,9 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRotindEjeX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRotindEjeY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRotindEjeY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnGirarRespectoPunto)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -352,6 +388,53 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
         lienzo.rotarFigura(idFig, grados);
     }//GEN-LAST:event_btnRotSimActionPerformed
 
+    private void btnGirarRespectoPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGirarRespectoPuntoActionPerformed
+        // TODO add your handling code here:
+        int idFig = Integer.parseInt(txtRotIndFig.getText());
+        int grados = Integer.parseInt(txtRotIndDeg.getText());
+        int ejeX = Integer.parseInt(txtRotindEjeX.getText());
+        int ejeY = Integer.parseInt(txtRotindEjeY.getText());
+        lienzo.rotarRespectoPunto(idFig, grados, ejeX, ejeY);
+    }//GEN-LAST:event_btnGirarRespectoPuntoActionPerformed
+
+    private void txtRotindEjeXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRotindEjeXActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRotindEjeXActionPerformed
+
+    private void txtRotindEjeYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRotindEjeYActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRotindEjeYActionPerformed
+
+    private void txtRotIndDegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRotIndDegActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRotIndDegActionPerformed
+
+    private void txtRotIndFigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRotIndFigActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRotIndFigActionPerformed
+
+    private boolean captureCoordinates = false; // Variable para activar la captura de coordenadas.
+
+private void btnRotPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRotPuntoActionPerformed
+    captureCoordinates = true; // Activar captura de coordenadas.
+}//GEN-LAST:event_btnRotPuntoActionPerformed
+
+private java.awt.event.MouseAdapter mouseListener = new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        // Si está activa la captura de coordenadas
+        if (captureCoordinates) {
+            // Capturar las coordenadas y mostrar en los JTextFields correspondientes.
+            txtRotindEjeX.setText(String.valueOf(e.getX()));
+            txtRotindEjeY.setText(String.valueOf(e.getY()));
+            captureCoordinates = false; // Desactivar captura de coordenadas.
+        } else {
+            // Si no está activa la captura, enviar el clic al lienzo (propósito original del ratón).
+            Event evt = new Event(lienzo, Event.MOUSE_DOWN, null);
+            lienzo.mouseDown(evt, e.getX(), e.getY());
+        }
+    }
+};
     /**
      * @param args the command line arguments
      */
@@ -389,11 +472,10 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEscalar;
+    private javax.swing.JButton btnGirarRespectoPunto;
     private javax.swing.JButton btnNewFig;
     private javax.swing.JButton btnRotPunto;
     private javax.swing.JButton btnRotSim;
-    private javax.swing.JTextField btnRotindEjeY;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -415,6 +497,7 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
     private javax.swing.JTextField txtRotIndDeg;
     private javax.swing.JTextField txtRotIndFig;
     private javax.swing.JTextField txtRotindEjeX;
+    private javax.swing.JTextField txtRotindEjeY;
     private javax.swing.JTextField txtSelectFigEsc;
     // End of variables declaration//GEN-END:variables
 }

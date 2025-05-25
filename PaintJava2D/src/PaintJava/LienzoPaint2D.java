@@ -167,7 +167,7 @@ public class LienzoPaint2D extends Canvas{
             double centroX = sumX / (double) figura.size();
             double centroY = sumY / (double) figura.size();
 
-            // Escalar cada punto respecto al centro
+
             for (int i = 0; i < figura.size(); i++) {
                 Point p = (Point) figura.get(i);
                 int newX = (int) (centroX + (p.x - centroX) * escala);
@@ -213,5 +213,31 @@ public class LienzoPaint2D extends Canvas{
         } else {
             System.out.println("Índice de figura inválido.");
         }
+    }
+    public void rotarRespectoPunto(int indiceFigura, double grados, double ejeX, double ejeY) {
+        if (indiceFigura >= 0 && indiceFigura < figuras.size()) {
+            Vector figura = (Vector) figuras.elementAt(indiceFigura - 1);
+
+            double centroX = ejeX;
+            double centroY = ejeY;
+
+
+            for (int i = 0; i < figura.size(); i++) {
+                Point p = (Point) figura.get(i);
+                double x = p.x;
+                double y = p.y;
+
+                int newX = (int) ((centroX + (x - centroX) * Math.cos(grados * Math.PI / 180)) - ((y - centroY) * Math.sin(grados * Math.PI / 180)));
+                int newY = (int) ((centroY + (x - centroX) * Math.sin(grados * Math.PI / 180)) + ((y - centroY) * Math.cos(grados * Math.PI / 180)));
+
+                p.setLocation(newX, newY);
+                figura.set(i, p);
+            }
+
+            repaint();
+        }else {
+            System.out.println("indice invalido");
+        }
+
     }
 }

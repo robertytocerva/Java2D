@@ -87,11 +87,11 @@
                                               </Group>
                                           </Group>
                                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="btnGirarRespectoPunto" alignment="0" max="32767" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="txtRotindEjeX" min="-2" pref="50" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="btnRotindEjeY" min="-2" pref="50" max="-2" attributes="0"/>
+                                                  <Component id="txtRotindEjeY" min="-2" pref="50" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
@@ -191,10 +191,10 @@
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtRotindEjeX" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnRotindEjeY" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtRotindEjeY" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnGirarRespectoPunto" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -265,6 +265,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRotPuntoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSelectFigEsc">
       <Events>
@@ -297,8 +300,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRotIndFig">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRotIndFigActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRotIndDeg">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRotIndDegActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
@@ -311,8 +320,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRotindEjeX">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRotindEjeXActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="btnRotindEjeY">
+    <Component class="javax.swing.JTextField" name="txtRotindEjeY">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtRotindEjeYActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
       <Properties>
@@ -324,10 +339,13 @@
         <Property name="text" type="java.lang.String" value="Y"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnGirarRespectoPunto">
       <Properties>
         <Property name="text" type="java.lang.String" value="Girar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGirarRespectoPuntoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel14">
       <Properties>
