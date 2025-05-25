@@ -4,17 +4,24 @@
  */
 package PaintJava;
 
+import java.awt.Color;
+
 /**
  *
  * @author user
  */
 public class VentanaPaintJava2D extends javax.swing.JFrame {
-
+    LienzoPaint2D lienzo = new  LienzoPaint2D();
     /**
      * Creates new form VentanaPaintJava2D
      */
     public VentanaPaintJava2D() {
         initComponents();
+        lienzo.setBounds(10, 10, 900, 900);
+        lienzo.setBackground(Color.BLACK);
+        this.add(lienzo);
+        this.setBounds(10, 10, 1100, 1000);
+        
     }
 
     /**
@@ -26,21 +33,257 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel5 = new javax.swing.JLabel();
+        btnNewFig = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtEscalarTam = new javax.swing.JTextField();
+        btnEscalar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtMover = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtRotFigID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnRotSim = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        txtSelectFigEsc = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtGradosRot = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        jLabel5.setText("jLabel5");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnNewFig.setText("Nueva Figura");
+        btnNewFig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewFigActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Escalar");
+
+        txtEscalarTam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEscalarTamActionPerformed(evt);
+            }
+        });
+
+        btnEscalar.setText("Escalar");
+        btnEscalar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEscalarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Mover");
+
+        txtMover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMoverActionPerformed(evt);
+            }
+        });
+        txtMover.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMoverKeyPressed(evt);
+            }
+        });
+
+        jLabel3.setText("Rotación");
+
+        txtRotFigID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRotFigIDActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Sobre centro");
+
+        btnRotSim.setText("Girar");
+        btnRotSim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRotSimActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Rotación Ind");
+
+        txtSelectFigEsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSelectFigEscActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Esc");
+
+        jLabel7.setText("Fig");
+
+        txtGradosRot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGradosRotActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Fig");
+
+        jLabel9.setText("Deg");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(424, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSelectFigEsc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(48, 48, 48))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(56, 56, 56))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtEscalarTam, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(btnEscalar, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                                .addComponent(txtMover))
+                                            .addComponent(btnNewFig)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(txtRotFigID, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtGradosRot, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(23, 23, 23))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btnRotSim, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addContainerGap()))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(59, 59, 59)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel9))
+                            .addComponent(jLabel4))
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNewFig)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEscalarTam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(2, 2, 2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSelectFigEsc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEscalar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtRotFigID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGradosRot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnRotSim)
+                .addGap(43, 43, 43)
+                .addComponent(jButton4)
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNewFigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewFigActionPerformed
+        // TODO add your handling code here:
+        lienzo.nuevaFigura();
+    }//GEN-LAST:event_btnNewFigActionPerformed
+
+    private void btnEscalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEscalarActionPerformed
+        // TODO add your handling code here:
+        int idFig = Integer.parseInt(txtSelectFigEsc.getText());
+        int tam = Integer.parseInt(txtEscalarTam.getText());
+        lienzo.escalarFigura(idFig,tam);
+    }//GEN-LAST:event_btnEscalarActionPerformed
+
+
+    private void txtMoverKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMoverKeyPressed
+        // TODO add your handling code here:
+        switch (evt.getKeyCode()){
+            case 37:
+                lienzo.moverFiguara(Integer.parseInt(txtMover.getText()),"Izq");
+                break;
+            case 38:
+                lienzo.moverFiguara(Integer.parseInt(txtMover.getText()),"Arriba");
+                break;
+            case 40:
+                lienzo.moverFiguara(Integer.parseInt(txtMover.getText()),"Abajo");
+                break;
+            case 39:
+                lienzo.moverFiguara(Integer.parseInt(txtMover.getText()),"Der");
+                break;
+            default:
+                System.out.println("Tecla no valida");
+                break;
+        }
+    }//GEN-LAST:event_txtMoverKeyPressed
+
+    private void txtEscalarTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEscalarTamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEscalarTamActionPerformed
+
+    private void txtMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMoverActionPerformed
+
+    private void txtRotFigIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRotFigIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRotFigIDActionPerformed
+
+    private void txtSelectFigEscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSelectFigEscActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSelectFigEscActionPerformed
+
+    private void txtGradosRotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGradosRotActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGradosRotActionPerformed
+
+    private void btnRotSimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRotSimActionPerformed
+        // TODO add your handling code here:
+        int idFig = Integer.parseInt(txtRotFigID.getText());
+        int grados = Integer.parseInt(txtGradosRot.getText());
+        lienzo.rotarFigura(idFig, grados);
+    }//GEN-LAST:event_btnRotSimActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +321,23 @@ public class VentanaPaintJava2D extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEscalar;
+    private javax.swing.JButton btnNewFig;
+    private javax.swing.JButton btnRotSim;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtEscalarTam;
+    private javax.swing.JTextField txtGradosRot;
+    private javax.swing.JTextField txtMover;
+    private javax.swing.JTextField txtRotFigID;
+    private javax.swing.JTextField txtSelectFigEsc;
     // End of variables declaration//GEN-END:variables
 }
