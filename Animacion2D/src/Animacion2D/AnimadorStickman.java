@@ -16,35 +16,36 @@ public class AnimadorStickman extends Thread {
     public void run() {
         while (true) {
             try {
-                caminar(10, 10);       // pasos hacia la derecha
-                lienzo.repaint();
-                caminar(10, 10);
-                lienzo.repaint();
+                caminar(20,9);        // salto y caída
+                vueltaDeCarro();
                 sentadillas();
-                lagartijas();
-                lagartijas();
+                brinco();
+                caminar(20,9);
+                vueltaDeCarro();
+                escalar(1.5);
+                caminar(20,9);
+                brinco();
+                escalar(1.1);
                 saltar();
-                escalar(1.3);
-                caminar(10,10);
-                lienzo.repaint();
-                caminar(10, 10);       // pasos hacia la derecha
-                lienzo.repaint();
-                caminar(10, 10);
-                lienzo.repaint();
-                caminar(10,10);
-                lienzo.repaint();
-                //saltar();              // salto y caída
-                //escalar(1.3);          // escala mientras está en el aire
-                //sentadillas();         // flexión
-                //lagartijas();          // animación de brazos
-                //levantarse();       // volver a posición original
-                       // salir caminando
-                reiniciar();           // volver al inicio
+                saltar();
+                saltar();
+                vueltaDeCarro();
+                reiniciar();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private void vueltaDeCarro() throws InterruptedException {
+        for (int i = 0; i <= 360; i += 15) {
+            stickman.trasladar(8, 0); // avanzar a la derecha
+            stickman.rotar(14.4, lienzo); // girar todo el cuerpo
+            lienzo.repaint();
+            Thread.sleep(50);
+        }
+    }
+
 
 
 
@@ -73,13 +74,13 @@ public class AnimadorStickman extends Thread {
 
         int[] desplazamientoY = {-14, -12, -10, -8, -5, -3, -1, 0, 1, 3, 5, 8, 10, 12, 14};
         for (int dy : desplazamientoY) {
-            stickman.trasladar(0, dy);
+            stickman.trasladar(9, dy);
             lienzo.repaint();
             Thread.sleep(40);
         }
 
         levantarBrazos(30); // regresar brazos
-        stickman.alinearAlturaBase(700);
+        stickman.alinearAlturaBase(650);
         lienzo.repaint();
 
     }
@@ -121,7 +122,7 @@ public class AnimadorStickman extends Thread {
             lienzo.repaint();
             Thread.sleep(100);
         }
-        stickman.alinearAlturaBase(700);
+        stickman.alinearAlturaBase(650);
         lienzo.repaint();
     }
 
@@ -135,21 +136,24 @@ public class AnimadorStickman extends Thread {
         puntos.set(index, rotarPunto(cadera, pierna, grados));
     }
 
-    private void lagartijas() throws InterruptedException {
-        for (int i = 0; i < 5; i++) {
-            rotarBrazo(true, -15); // bajar brazo izquierdo
-            rotarBrazo(false, -15); // bajar brazo derecho
+    private void brinco() throws InterruptedException {
+        for (int i = 0; i < 3; i++) { // hace 3 flexiones
+            // Posición baja
+            stickman.trasladar(0, 10);     // cuerpo baja
+            stickman.escalar(0.9);         // cuerpo se comprime un poco
             lienzo.repaint();
-            Thread.sleep(100);
+            Thread.sleep(200);
 
-            rotarBrazo(true, 15); // subir brazo izquierdo
-            rotarBrazo(false, 15); // subir brazo derecho
+            // Posición alta
+            stickman.trasladar(0, -10);    // cuerpo sube
+            stickman.escalar(1.1);         // cuerpo se estira ligeramente
             lienzo.repaint();
-            Thread.sleep(100);
+            Thread.sleep(200);
         }
-        stickman.alinearAlturaBase(700);
+        //stickman.reset(); // vuelve a la pose original
         lienzo.repaint();
     }
+
 
     private void rotarBrazo(boolean izquierdo, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();

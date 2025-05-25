@@ -40,7 +40,7 @@ public class Stickman {
 
         // Cabeza
         Point cabeza = puntos.get(0);
-        g.drawOval(cabeza.x - 15, cabeza.y - 15, 30, 30);
+        g.drawOval(cabeza.x - 15, cabeza.y - 15, 40, 40);
 
         // Cuello a torso
         path.moveTo(puntos.get(1).x, puntos.get(1).y);
@@ -80,6 +80,13 @@ public class Stickman {
         Point torso = puntos.get(2);
         int dy = baseY - torso.y;
         trasladar(0, dy);
+    }
+
+    public void rotar(double angulo, LienzoAnimacion lienzo) {
+        Point centro = puntos.get(2); // o calcula el centro de la figura
+        for (int i = 0; i < puntos.size(); i++) {
+            puntos.set(i, lienzo.rotarPunto(puntos.get(i), angulo, centro));
+        }
     }
 
 

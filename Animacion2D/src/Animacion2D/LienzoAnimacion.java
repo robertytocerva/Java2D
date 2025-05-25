@@ -33,6 +33,12 @@ public class LienzoAnimacion extends Canvas{
         g2d.drawLine(0, 700, 1500, 700);
         stickman.dibujar(g2d);
     }
+    public Point rotarPunto(Point p, double angulo, Point centro) {
+        double rad = Math.toRadians(angulo);
+        int x = centro.x + (int)((p.x - centro.x) * Math.cos(rad) - (p.y - centro.y) * Math.sin(rad));
+        int y = centro.y + (int)((p.x - centro.x) * Math.sin(rad) + (p.y - centro.y) * Math.cos(rad));
+        return new Point(x, y);
+    }
 
 
 }
