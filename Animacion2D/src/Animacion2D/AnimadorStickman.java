@@ -63,9 +63,9 @@ public class AnimadorStickman extends Thread {
 
     private void moverPierna(boolean izquierda, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point cadera = puntos.get(2); // torso como eje
-
-        int index = izquierda ? 5 : 6;
+        Point cadera = puntos.get(10); // torso como eje (ahora en índice 10)
+    
+        int index = izquierda ? 13 : 14; // nuevos índices para piernas
         puntos.set(index, rotarPunto(cadera, puntos.get(index), grados));
     }
 
@@ -87,11 +87,11 @@ public class AnimadorStickman extends Thread {
 
     private void levantarBrazos(double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point hombro = puntos.get(1); // cuello como base
-
-        // índice 3 = brazo izquierdo, 4 = brazo derecho
-        puntos.set(3, rotarPunto(hombro, puntos.get(3), grados));
-        puntos.set(4, rotarPunto(hombro, puntos.get(4), grados));
+        Point hombro = puntos.get(9); // cuello como base (ahora en índice 9)
+    
+        // índice 11 = brazo izquierdo, 12 = brazo derecho (nuevos índices)
+        puntos.set(11, rotarPunto(hombro, puntos.get(11), grados));
+        puntos.set(12, rotarPunto(hombro, puntos.get(12), grados));
     }
     private Point rotarPunto(Point centro, Point p, double grados) {
         double rad = Math.toRadians(grados);
@@ -128,9 +128,9 @@ public class AnimadorStickman extends Thread {
 
     private void rotarPierna(boolean izquierda, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point cadera = puntos.get(2); // torso como eje
-
-        int index = izquierda ? 5 : 6;
+        Point cadera = puntos.get(10); // torso como eje (ahora en índice 10)
+    
+        int index = izquierda ? 13 : 14; // nuevos índices para piernas
         Point pierna = puntos.get(index);
 
         puntos.set(index, rotarPunto(cadera, pierna, grados));
@@ -157,9 +157,9 @@ public class AnimadorStickman extends Thread {
 
     private void rotarBrazo(boolean izquierdo, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point hombro = puntos.get(1); // cuello como base
-
-        int index = izquierdo ? 3 : 4;
+        Point hombro = puntos.get(9); // cuello como base (ahora en índice 9)
+    
+        int index = izquierdo ? 11 : 12; // nuevos índices para brazos
         Point brazo = puntos.get(index);
 
         puntos.set(index, rotarPunto(hombro, brazo, grados));
