@@ -4,7 +4,7 @@
  */
 package Animacion2D;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *
@@ -17,11 +17,26 @@ public class VentanaAnimacion extends javax.swing.JFrame {
      */
     public VentanaAnimacion() {
         initComponents();
-        lienzo.setBounds(0, 0, 1500, 1000);
+        
+        // Configurar el layout para maximizar el lienzo
+        setLayout(new BorderLayout());
+        
+        // Configurar el lienzo
+        lienzo.setPreferredSize(new Dimension(1500, 1000));
         lienzo.setBackground(Color.ORANGE);
-        this.add(lienzo);
-        this.setBounds(0, 0, 1500, 1000);
-                
+        
+        // Usar doble búfer en el JFrame
+        this.setDoubleBuffered(true);
+        
+        // Añadir el lienzo al centro
+        this.add(lienzo, BorderLayout.CENTER);
+        
+        // Configurar el tamaño de la ventana
+        this.setSize(1500, 1000);
+        this.setLocationRelativeTo(null); // Centrar ventana
+    }
+
+    private void setDoubleBuffered(boolean b) {
     }
 
     /**

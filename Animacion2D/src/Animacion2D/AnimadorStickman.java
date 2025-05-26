@@ -12,37 +12,89 @@ public class AnimadorStickman extends Thread {
         this.stickman = stickman;
     }
 
+    private volatile boolean running = true;
+    
     @Override
     public void run() {
-        while (true) {
+        while (running) {
             try {
-                caminar(20,9);        // salto y caída
+                // Esperar un momento antes de comenzar una nueva iteración
+                Thread.sleep(200);
+                
+                caminar(20, 9);       // salto y caída
+                if (!running) break;
+                
                 vueltaDeCarro();
+                if (!running) break;
+                
                 sentadillas();
+                if (!running) break;
+                
                 brinco();
-                caminar(20,9);
+                if (!running) break;
+                
+                caminar(20, 9);
+                if (!running) break;
+                
                 vueltaDeCarro();
+                if (!running) break;
+                
                 escalar(1.5);
-                caminar(20,9);
+                if (!running) break;
+                
+                caminar(20, 9);
+                if (!running) break;
+                
                 brinco();
+                if (!running) break;
+                
                 escalar(1.1);
+                if (!running) break;
+                
                 saltar();
+                if (!running) break;
+                
                 saltar();
+                if (!running) break;
+                
                 saltar();
+                if (!running) break;
+                
                 vueltaDeCarro();
+                if (!running) break;
+                
                 reiniciar();
+                if (!running) break;
+                
             } catch (InterruptedException e) {
+                running = false;
+                Thread.currentThread().interrupt();
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void detener() {
+        running = false;
     }
 
     private void vueltaDeCarro() throws InterruptedException {
         for (int i = 0; i <= 360; i += 15) {
             stickman.trasladar(8, 0); // avanzar a la derecha
             stickman.rotar(14.4, lienzo); // girar todo el cuerpo
+            
+            // Repintar y esperar para que se complete
             lienzo.repaint();
-            Thread.sleep(50);
+            
+            // Usar espera sin bloquear repintado
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw e;
+            }
+            
+            // Dar tiempo al sistema para procesar eventos gráficos
+            Toolkit.getDefaultToolkit().sync();
         }
     }
 
@@ -56,8 +108,11 @@ public class AnimadorStickman extends Thread {
             moverPierna(true, 10 * direccion);
             moverPierna(false, -10 * direccion);
             stickman.trasladar(paso, 0);
+            
+            // Repintar y sincronizar
             lienzo.repaint();
             Thread.sleep(70);
+            Toolkit.getDefaultToolkit().sync();
         }
     }
 

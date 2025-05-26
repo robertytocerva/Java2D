@@ -43,11 +43,18 @@ public class Stickman {
 
 
     public void dibujar(Graphics2D g) {
+        // Guardar la configuración original del Graphics2D
+        Stroke originalStroke = g.getStroke();
+        Color originalColor = g.getColor();
+        
+        // Configurar para calidad
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setStroke(new BasicStroke(4));
         g.setColor(Color.BLACK);
-
+    
+        // Crear el path completo
         GeneralPath path = new GeneralPath();
-
+    
         // Cabeza con GeneralPath
         path.moveTo(puntos.get(1).x, puntos.get(1).y); // Empezar en cabeza superior izquierda
         path.lineTo(puntos.get(2).x, puntos.get(2).y); // Superior centro
@@ -73,8 +80,13 @@ public class Stickman {
         path.lineTo(puntos.get(13).x, puntos.get(13).y);
         path.moveTo(puntos.get(10).x, puntos.get(10).y);
         path.lineTo(puntos.get(14).x, puntos.get(14).y);
-
+    
+        // Dibujar todo el path de una vez
         g.draw(path);
+        
+        // Restaurar la configuración original
+        g.setStroke(originalStroke);
+        g.setColor(originalColor);
     }
 
     public void trasladar(int dx, int dy) {
@@ -151,16 +163,28 @@ public class Stickman {
      * Esto mantiene la forma circular de la cabeza independientemente de las transformaciones
      */
     private void actualizarPuntosCabeza() {
+        if (puntos == null || puntos.isEmpty()) {
+            return; // Protección contra errores
+        }
+        
         Point centro = puntos.get(0);
+        if (centro == null) {
+            return; // Protección contra puntos nulos
+        }
+        
+        // Usar constantes para las dimensiones de la cabeza
+        final int RADIO_X = 20;
+        final int RADIO_Y = 20;
         
         // Actualizar puntos de la cabeza basándose en el centro y distancias fijas
-        puntos.set(1, new Point(centro.x - 15, centro.y - 15)); // cabeza superior izquierda
-        puntos.set(2, new Point(centro.x, centro.y - 20));      // cabeza superior centro
-        puntos.set(3, new Point(centro.x + 15, centro.y - 15)); // cabeza superior derecha
-        puntos.set(4, new Point(centro.x + 20, centro.y));      // cabeza derecha
-        puntos.set(5, new Point(centro.x + 15, centro.y + 15)); // cabeza inferior derecha
-        puntos.set(6, new Point(centro.x, centro.y + 20));      // cabeza inferior centro
-        puntos.set(7, new Point(centro.x - 15, centro.y + 15)); // cabeza inferior izquierda
-        puntos.set(8, new Point(centro.x - 20, centro.y));      // cabeza izquierda
+        // Usando una forma más elíptica para mejor apariencia
+        puntos.set(1, new Point(centro.x - (int)(RADIO_X * 0.75), centro.y - (int)(RADIO_Y * 0.75))); // cabeza superior izquierda
+        puntos.set(2, new Point(centro.x, centro.y - RADIO_Y));                  // cabeza superior centro
+        puntos.set(3, new Point(centro.x + (int)(RADIO_X * 0.75), centro.y - (int)(RADIO_Y * 0.75))); // cabeza superior derecha
+        puntos.set(4, new Point(centro.x + RADIO_X, centro.y));                  // cabeza derecha
+        puntos.set(5, new Point(centro.x + (int)(RADIO_X * 0.75), centro.y + (int)(RADIO_Y * 0.75))); // cabeza inferior derecha
+        puntos.set(6, new Point(centro.x, centro.y + RADIO_Y));                  // cabeza inferior centro
+        puntos.set(7, new Point(centro.x - (int)(RADIO_X * 0.75), centro.y + (int)(RADIO_Y * 0.75))); // cabeza inferior izquierda
+        puntos.set(8, new Point(centro.x - RADIO_X, centro.y));                  // cabeza izquierda
     }
 }
