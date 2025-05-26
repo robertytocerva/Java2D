@@ -29,10 +29,10 @@ public class LienzoAnimacion extends Canvas {
         setBackground(Color.ORANGE);
         stickman = new Stickman(100, 500);
         
-        // Crear letras interactivas
-        letras.add(new LetraArrastrable('P', 50, 50, Color.RED, "pausar"));
-        letras.add(new LetraArrastrable('C', 120, 50, Color.GREEN, "continuar"));
-        letras.add(new LetraArrastrable('T', 190, 50, Color.BLUE, "terminar"));
+        // Crear letras interactivas - posicionadas en la parte superior
+        letras.add(new LetraArrastrable('P', 100, 100, new Color(200, 50, 50), "pausar"));
+        letras.add(new LetraArrastrable('C', 200, 100, new Color(50, 200, 50), "continuar"));
+        letras.add(new LetraArrastrable('T', 300, 100, new Color(50, 50, 200), "terminar"));
         
         // Configurar manejadores de eventos del mouse
         configurarEventosMouse();
@@ -62,6 +62,7 @@ public class LienzoAnimacion extends Canvas {
                     if (letra.contienePunto(e.getX(), e.getY())) {
                         letraSeleccionada = letra;
                         letra.setSeleccionada(true);
+                        System.out.println("Letra seleccionada: " + letra.getLetra());
                         repaint();
                         break;
                     }
@@ -72,25 +73,34 @@ public class LienzoAnimacion extends Canvas {
             public void mouseReleased(MouseEvent e) {
                 if (letraSeleccionada != null) {
                     // Verificar colisión con el stickman al soltar
-                    if (letraSeleccionada.colisionaCon(stickman)) {
+                    boolean colision = letraSeleccionada.colisionaCon(stickman);
+                    
+                    if (colision) {
+                        System.out.println("¡Colisión detectada con letra " + letraSeleccionada.getLetra() + "!");
+                        
                         // Ejecutar acción según la letra
                         switch (letraSeleccionada.getLetra()) {
                             case 'P': // Pausar
                                 if (animador != null && !animador.isPaused()) {
+                                    System.out.println("Ejecutando acción: PAUSAR");
                                     animador.pausar();
                                 }
                                 break;
                             case 'C': // Continuar
                                 if (animador != null && animador.isPaused()) {
+                                    System.out.println("Ejecutando acción: CONTINUAR");
                                     animador.reanudar();
                                 }
                                 break;
                             case 'T': // Terminar
                                 if (animador != null) {
+                                    System.out.println("Ejecutando acción: TERMINAR");
                                     animador.detener();
                                 }
                                 break;
                         }
+                    } else {
+                        System.out.println("No hubo colisión con el stickman");
                     }
                     
                     // Deseleccionar la letra
@@ -156,16 +166,30 @@ public class LienzoAnimacion extends Canvas {
         
         // Dibujar estado actual de la animación
         offscreenGraphics.setColor(Color.BLACK);
-        offscreenGraphics.setFont(new Font("Arial", Font.BOLD, 14));
+        offscreenGraphics.setFont(new Font("Arial", Font.BOLD, 16));
         if (animador != null) {
             String estado = animador.isPaused() ? "PAUSADO" : "REPRODUCIENDO";
             offscreenGraphics.drawString("Estado: " + estado, 10, 30);
         }
         
         // Dibujar instrucciones
-        offscreenGraphics.setFont(new Font("Arial", Font.PLAIN, 12));
-        offscreenGraphics.drawString("Arrastra las letras hasta el Stickman:", 300, 30);
-        offscreenGraphics.drawString("P = Pausar, C = Continuar, T = Terminar", 300, 50);
+        offscreenGraphics.setFont(new Font("Arial", Font.PLAIN, 14));
+        offscreenGraphics.drawString("Arrastra las letras hasta el Stickman para controlar la animación:", 300, 30);
+        offscreenGraphics.drawString("P = Pausar la animación", 300, 50);
+        offscreenGraphics.drawString("C = Continuar la animación", 300, 70);
+        offscreenGraphics.drawString("T = Terminar la animación", 300, 90);
+        
+        // Mostrar información de colisiones
+        if (animador != null) {
+            for (LetraArrastrable letra : letras) {
+                if (letra.colisionaCon(stickman)) {
+                    offscreenGraphics.setColor(Color.RED);
+                    offscreenGraphics.setFont(new Font("Arial", Font.BOLD, 18));
+                    offscreenGraphics.drawString("¡Colisión detectada con letra " + letra.getLetra() + "!", 500, 30);
+                    break;
+                }
+            }
+        }
         
         // Copiar el buffer a la pantalla
         g.drawImage(offscreenBuffer, 0, 0, this);

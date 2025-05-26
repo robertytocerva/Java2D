@@ -23,7 +23,7 @@ public class VentanaAnimacion extends javax.swing.JFrame {
         initComponents();
         
         // Configurar el título de la ventana
-        setTitle("Animación Interactiva - Arrastra P, C, T hacia el Stickman");
+        setTitle("Animación Interactiva - Arrastra las letras P, C, T (dibujadas con puntos) hacia el Stickman");
         
         // Configurar el layout para maximizar el lienzo
         setLayout(new BorderLayout());
