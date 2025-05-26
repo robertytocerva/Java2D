@@ -5,7 +5,9 @@
 package Animacion2D;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,14 +15,27 @@ import java.awt.image.BufferedImage;
  */
 public class LienzoAnimacion extends Canvas {
     private Stickman stickman;
+    private AnimadorStickman animador;
     private BufferedImage offscreenBuffer;
     private Graphics2D offscreenGraphics;
     private int ancho = 1500;
     private int alto = 1000;
     
+    // Letras arrastrables
+    private ArrayList<LetraArrastrable> letras = new ArrayList<>();
+    private LetraArrastrable letraSeleccionada = null;
+    
     public LienzoAnimacion() {
         setBackground(Color.ORANGE);
         stickman = new Stickman(100, 500);
+        
+        // Crear letras interactivas
+        letras.add(new LetraArrastrable('P', 50, 50, Color.RED, "pausar"));
+        letras.add(new LetraArrastrable('C', 120, 50, Color.GREEN, "continuar"));
+        letras.add(new LetraArrastrable('T', 190, 50, Color.BLUE, "terminar"));
+        
+        // Configurar manejadores de eventos del mouse
+        configurarEventosMouse();
         
         // Crear el buffer para doble búfer
         offscreenBuffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
@@ -34,8 +49,72 @@ public class LienzoAnimacion extends Canvas {
         iniciarAnimacion();
     }
     
+    /**
+     * Configura los manejadores de eventos del mouse para arrastrar las letras
+     */
+    private void configurarEventosMouse() {
+        // Manejar clic del mouse (para seleccionar una letra)
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // Verificar si se hizo clic en alguna letra
+                for (LetraArrastrable letra : letras) {
+                    if (letra.contienePunto(e.getX(), e.getY())) {
+                        letraSeleccionada = letra;
+                        letra.setSeleccionada(true);
+                        repaint();
+                        break;
+                    }
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (letraSeleccionada != null) {
+                    // Verificar colisión con el stickman al soltar
+                    if (letraSeleccionada.colisionaCon(stickman)) {
+                        // Ejecutar acción según la letra
+                        switch (letraSeleccionada.getLetra()) {
+                            case 'P': // Pausar
+                                if (animador != null && !animador.isPaused()) {
+                                    animador.pausar();
+                                }
+                                break;
+                            case 'C': // Continuar
+                                if (animador != null && animador.isPaused()) {
+                                    animador.reanudar();
+                                }
+                                break;
+                            case 'T': // Terminar
+                                if (animador != null) {
+                                    animador.detener();
+                                }
+                                break;
+                        }
+                    }
+                    
+                    // Deseleccionar la letra
+                    letraSeleccionada.setSeleccionada(false);
+                    letraSeleccionada = null;
+                    repaint();
+                }
+            }
+        });
+        
+        // Manejar movimiento del mouse (para arrastrar la letra seleccionada)
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (letraSeleccionada != null) {
+                    letraSeleccionada.mover(e.getX(), e.getY());
+                    repaint();
+                }
+            }
+        });
+    }
+    
     public void iniciarAnimacion() {
-        AnimadorStickman animador = new AnimadorStickman(this, stickman);
+        animador = new AnimadorStickman(this, stickman);
         animador.start();
     }
 
@@ -62,13 +141,31 @@ public class LienzoAnimacion extends Canvas {
         offscreenGraphics.setColor(getBackground());
         offscreenGraphics.fillRect(0, 0, getWidth(), getHeight());
         
-        // Dibujar en el buffer
+        // Dibujar la línea del suelo
         offscreenGraphics.setStroke(new BasicStroke(3));
         offscreenGraphics.setColor(Color.GRAY);
         offscreenGraphics.drawLine(0, 700, 1500, 700);
         
         // Dibujar el stickman en el buffer
         stickman.dibujar(offscreenGraphics);
+        
+        // Dibujar las letras arrastrables
+        for (LetraArrastrable letra : letras) {
+            letra.dibujar((Graphics2D)offscreenGraphics);
+        }
+        
+        // Dibujar estado actual de la animación
+        offscreenGraphics.setColor(Color.BLACK);
+        offscreenGraphics.setFont(new Font("Arial", Font.BOLD, 14));
+        if (animador != null) {
+            String estado = animador.isPaused() ? "PAUSADO" : "REPRODUCIENDO";
+            offscreenGraphics.drawString("Estado: " + estado, 10, 30);
+        }
+        
+        // Dibujar instrucciones
+        offscreenGraphics.setFont(new Font("Arial", Font.PLAIN, 12));
+        offscreenGraphics.drawString("Arrastra las letras hasta el Stickman:", 300, 30);
+        offscreenGraphics.drawString("P = Pausar, C = Continuar, T = Terminar", 300, 50);
         
         // Copiar el buffer a la pantalla
         g.drawImage(offscreenBuffer, 0, 0, this);
@@ -79,5 +176,13 @@ public class LienzoAnimacion extends Canvas {
         int x = centro.x + (int)((p.x - centro.x) * Math.cos(rad) - (p.y - centro.y) * Math.sin(rad));
         int y = centro.y + (int)((p.x - centro.x) * Math.sin(rad) + (p.y - centro.y) * Math.cos(rad));
         return new Point(x, y);
+    }
+    
+    /**
+     * Obtiene el animador del stickman
+     * @return Referencia al animador
+     */
+    public AnimadorStickman getAnimador() {
+        return animador;
     }
 }

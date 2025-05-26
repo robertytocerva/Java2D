@@ -13,11 +13,16 @@ public class AnimadorStickman extends Thread {
     }
 
     private volatile boolean running = true;
+    private volatile boolean paused = false;
     
     @Override
     public void run() {
         while (running) {
             try {
+                // Verificar si está en pausa
+                waitIfPaused();
+                if (!running) break;
+                
                 // Esperar un momento antes de comenzar una nueva iteración
                 Thread.sleep(200);
                 
@@ -72,14 +77,61 @@ public class AnimadorStickman extends Thread {
                 e.printStackTrace();
             }
         }
+        System.out.println("Hilo de animación terminado");
     }
     
-    public void detener() {
+    /**
+     * Espera si la animación está en pausa
+     */
+    private void waitIfPaused() throws InterruptedException {
+        synchronized (this) {
+            while (paused && running) {
+                wait(); // Esperar hasta que se reanude
+            }
+        }
+    }
+    
+    /**
+     * Pausa la animación
+     */
+    public synchronized void pausar() {
+        paused = true;
+        System.out.println("Animación pausada");
+    }
+    
+    /**
+     * Reanuda la animación
+     */
+    public synchronized void reanudar() {
+        paused = false;
+        notifyAll(); // Notificar a los hilos en espera
+        System.out.println("Animación reanudada");
+    }
+    
+    /**
+     * Detiene completamente la animación
+     */
+    public synchronized void detener() {
         running = false;
+        paused = false;
+        notifyAll(); // Despertar el hilo si está esperando
+        System.out.println("Animación detenida");
+    }
+    
+    /**
+     * Verifica si la animación está pausada
+     * @return true si está pausada
+     */
+    public boolean isPaused() {
+        return paused;
     }
 
     private void vueltaDeCarro() throws InterruptedException {
         for (int i = 0; i <= 360; i += 15) {
+            // Verificar si se ha pausado la animación
+            waitIfPaused();
+            if (!running) return;
+            
             stickman.trasladar(8, 0); // avanzar a la derecha
             stickman.rotar(14.4, lienzo); // girar todo el cuerpo
             
@@ -103,6 +155,10 @@ public class AnimadorStickman extends Thread {
 
     private void caminar(int paso, int repeticiones) throws InterruptedException {
         for (int i = 0; i < repeticiones; i++) {
+            // Verificar si se ha pausado la animación
+            waitIfPaused();
+            if (!running) return;
+            
             int direccion = (i % 2 == 0) ? 1 : -1;
 
             moverPierna(true, 10 * direccion);

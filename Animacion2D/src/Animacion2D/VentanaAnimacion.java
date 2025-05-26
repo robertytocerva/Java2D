@@ -5,6 +5,10 @@
 package Animacion2D;
 
 import java.awt.*;
+import java.awt.event.*;
+import javax.swing.JComponent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  *
@@ -18,6 +22,9 @@ public class VentanaAnimacion extends javax.swing.JFrame {
     public VentanaAnimacion() {
         initComponents();
         
+        // Configurar el título de la ventana
+        setTitle("Animación Interactiva - Arrastra P, C, T hacia el Stickman");
+        
         // Configurar el layout para maximizar el lienzo
         setLayout(new BorderLayout());
         
@@ -25,19 +32,33 @@ public class VentanaAnimacion extends javax.swing.JFrame {
         lienzo.setPreferredSize(new Dimension(1500, 1000));
         lienzo.setBackground(Color.ORANGE);
         
-        // Usar doble búfer en el JFrame
-        this.setDoubleBuffered(true);
+        // Habilitar doble búfer en el panel de contenido
+        if (getContentPane() instanceof JComponent) {
+            ((JComponent)getContentPane()).setDoubleBuffered(true);
+        }
         
         // Añadir el lienzo al centro
         this.add(lienzo, BorderLayout.CENTER);
+        
+        // Agregar manejador de cierre para detener el hilo correctamente
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (lienzo.getAnimador() != null) {
+                    lienzo.getAnimador().detener();
+                }
+                dispose();
+                System.exit(0);
+            }
+        });
         
         // Configurar el tamaño de la ventana
         this.setSize(1500, 1000);
         this.setLocationRelativeTo(null); // Centrar ventana
     }
 
-    private void setDoubleBuffered(boolean b) {
-    }
+    //private void setDoubleBuffered(boolean b) {
+   // }
 
     /**
      * This method is called from within the constructor to initialize the form.

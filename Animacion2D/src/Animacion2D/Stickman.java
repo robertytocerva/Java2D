@@ -159,6 +159,27 @@ public class Stickman {
     }
     
     /**
+     * Obtiene un rectángulo que representa el área de colisión del stickman
+     * @return Rectángulo que representa el área de colisión
+     */
+    public Rectangle2D obtenerRectanguloColision() {
+        // Calcular los límites del stickman para detectar colisiones
+        int minX = Integer.MAX_VALUE;
+        int minY = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE;
+        int maxY = Integer.MIN_VALUE;
+        
+        for (Point p : puntos) {
+            if (p.x < minX) minX = p.x;
+            if (p.y < minY) minY = p.y;
+            if (p.x > maxX) maxX = p.x;
+            if (p.y > maxY) maxY = p.y;
+        }
+        
+        return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
+    }
+    
+    /**
      * Actualiza la posición de los puntos de la cabeza basándose en el punto central
      * Esto mantiene la forma circular de la cabeza independientemente de las transformaciones
      */
