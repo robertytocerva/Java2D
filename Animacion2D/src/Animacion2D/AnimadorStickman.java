@@ -19,14 +19,13 @@ public class AnimadorStickman extends Thread {
     public void run() {
         while (running) {
             try {
-                // Verificar si está en pausa
+
                 waitIfPaused();
                 if (!running) break;
-                
-                // Esperar un momento antes de comenzar una nueva iteración
+
                 Thread.sleep(200);
                 
-                caminar(20, 9);       // salto y caída
+                caminar(10, 9);       // salto y caída
                 if (!running) break;
                 
                 vueltaDeCarro();
@@ -80,9 +79,7 @@ public class AnimadorStickman extends Thread {
         System.out.println("Hilo de animación terminado");
     }
     
-    /**
-     * Espera si la animación está en pausa
-     */
+
     private void waitIfPaused() throws InterruptedException {
         synchronized (this) {
             while (paused && running) {
@@ -91,26 +88,20 @@ public class AnimadorStickman extends Thread {
         }
     }
     
-    /**
-     * Pausa la animación
-     */
+
     public synchronized void pausar() {
         paused = true;
         System.out.println("Animación pausada");
     }
     
-    /**
-     * Reanuda la animación
-     */
+
     public synchronized void reanudar() {
         paused = false;
         notifyAll(); // Notificar a los hilos en espera
         System.out.println("Animación reanudada");
     }
     
-    /**
-     * Detiene completamente la animación
-     */
+
     public synchronized void detener() {
         running = false;
         paused = false;
@@ -118,34 +109,29 @@ public class AnimadorStickman extends Thread {
         System.out.println("Animación detenida");
     }
     
-    /**
-     * Verifica si la animación está pausada
-     * @return true si está pausada
-     */
+
     public boolean isPaused() {
         return paused;
     }
 
     private void vueltaDeCarro() throws InterruptedException {
         for (int i = 0; i <= 360; i += 15) {
-            // Verificar si se ha pausado la animación
+
             waitIfPaused();
             if (!running) return;
             
-            stickman.trasladar(8, 0); // avanzar a la derecha
-            stickman.rotar(14.4, lienzo); // girar todo el cuerpo
+            stickman.trasladar(8, 0);
+            stickman.rotar(14.4, lienzo);
             
-            // Repintar y esperar para que se complete
+
             lienzo.repaint();
             
-            // Usar espera sin bloquear repintado
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 throw e;
             }
             
-            // Dar tiempo al sistema para procesar eventos gráficos
             Toolkit.getDefaultToolkit().sync();
         }
     }
@@ -155,7 +141,7 @@ public class AnimadorStickman extends Thread {
 
     private void caminar(int paso, int repeticiones) throws InterruptedException {
         for (int i = 0; i < repeticiones; i++) {
-            // Verificar si se ha pausado la animación
+
             waitIfPaused();
             if (!running) return;
             
@@ -164,8 +150,7 @@ public class AnimadorStickman extends Thread {
             moverPierna(true, 10 * direccion);
             moverPierna(false, -10 * direccion);
             stickman.trasladar(paso, 0);
-            
-            // Repintar y sincronizar
+
             lienzo.repaint();
             Thread.sleep(70);
             Toolkit.getDefaultToolkit().sync();
@@ -174,14 +159,14 @@ public class AnimadorStickman extends Thread {
 
     private void moverPierna(boolean izquierda, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point cadera = puntos.get(10); // torso como eje (ahora en índice 10)
+        Point cadera = puntos.get(10); // torso como eje
     
         int index = izquierda ? 13 : 14; // nuevos índices para piernas
         puntos.set(index, rotarPunto(cadera, puntos.get(index), grados));
     }
 
     private void saltar() throws InterruptedException {
-        levantarBrazos(-30); // subir brazos
+        levantarBrazos(-30); // subir brazo
 
         int[] desplazamientoY = {-14, -12, -10, -8, -5, -3, -1, 0, 1, 3, 5, 8, 10, 12, 14};
         for (int dy : desplazamientoY) {
@@ -198,9 +183,9 @@ public class AnimadorStickman extends Thread {
 
     private void levantarBrazos(double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point hombro = puntos.get(9); // cuello como base (ahora en índice 9)
+        Point hombro = puntos.get(9); // cuello como base
     
-        // índice 11 = brazo izquierdo, 12 = brazo derecho (nuevos índices)
+        // índice 11 = brazo izquierdo, 12 = brazo derecho
         puntos.set(11, rotarPunto(hombro, puntos.get(11), grados));
         puntos.set(12, rotarPunto(hombro, puntos.get(12), grados));
     }
@@ -239,16 +224,16 @@ public class AnimadorStickman extends Thread {
 
     private void rotarPierna(boolean izquierda, double grados) {
         ArrayList<Point> puntos = stickman.getPuntos();
-        Point cadera = puntos.get(10); // torso como eje (ahora en índice 10)
+        Point cadera = puntos.get(10); // torso como eje
     
-        int index = izquierda ? 13 : 14; // nuevos índices para piernas
+        int index = izquierda ? 13 : 14;
         Point pierna = puntos.get(index);
 
         puntos.set(index, rotarPunto(cadera, pierna, grados));
     }
 
     private void brinco() throws InterruptedException {
-        for (int i = 0; i < 3; i++) { // hace 3 flexiones
+        for (int i = 0; i < 3; i++) {
             // Posición baja
             stickman.trasladar(0, 10);     // cuerpo baja
             stickman.escalar(0.9);         // cuerpo se comprime un poco
@@ -261,33 +246,16 @@ public class AnimadorStickman extends Thread {
             lienzo.repaint();
             Thread.sleep(200);
         }
-        //stickman.reset(); // vuelve a la pose original
         lienzo.repaint();
     }
 
 
-    private void rotarBrazo(boolean izquierdo, double grados) {
-        ArrayList<Point> puntos = stickman.getPuntos();
-        Point hombro = puntos.get(9); // cuello como base (ahora en índice 9)
-    
-        int index = izquierdo ? 11 : 12; // nuevos índices para brazos
-        Point brazo = puntos.get(index);
 
-        puntos.set(index, rotarPunto(hombro, brazo, grados));
-    }
 
-    private void levantarse() throws InterruptedException {
-        stickman.trasladar(0, -20);
-        lienzo.repaint();
-        Thread.sleep(300);
-
-        stickman.alinearAlturaBase(700);
-        lienzo.repaint();
-    }
 
     private void reiniciar() throws InterruptedException {
         Thread.sleep(300);
-        stickman.reset(); // volver a tamaño y posición original
+        stickman.reset();
         lienzo.repaint();
         Thread.sleep(300);
     }

@@ -19,12 +19,11 @@ public class Stickman {
 
         puntos.add(new Point(x, y));
         
-        // Añadimos puntos temporales para la cabeza (serán actualizados después)
+
         for (int i = 0; i < 8; i++) {
-            puntos.add(new Point(0, 0)); // Placeholder para los puntos de la cabeza
+            puntos.add(new Point(0, 0));
         }
-    
-        // Resto del cuerpo (índices desplazados)
+
         puntos.add(new Point(x, y + 30));      // cuello (9)
         puntos.add(new Point(x, y + 120));     // torso (10)
         puntos.add(new Point(x - 60, y + 60)); // brazo izq (11)
@@ -32,7 +31,7 @@ public class Stickman {
         puntos.add(new Point(x - 40, y + 200)); // pierna izq (13)
         puntos.add(new Point(x + 40, y + 200)); // pierna der (14)
         
-        // Ahora actualizamos los puntos de la cabeza basados en el centro
+
         actualizarPuntosCabeza();
     }
 
@@ -43,12 +42,9 @@ public class Stickman {
 
 
     public void dibujar(Graphics2D g) {
-        // Guardar la configuración original del Graphics2D
-        Stroke originalStroke = g.getStroke();
-        Color originalColor = g.getColor();
+
         
-        // Configurar para calidad
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         g.setStroke(new BasicStroke(4));
         g.setColor(Color.BLACK);
     
@@ -81,12 +77,9 @@ public class Stickman {
         path.moveTo(puntos.get(10).x, puntos.get(10).y);
         path.lineTo(puntos.get(14).x, puntos.get(14).y);
     
-        // Dibujar todo el path de una vez
+
         g.draw(path);
-        
-        // Restaurar la configuración original
-        g.setStroke(originalStroke);
-        g.setColor(originalColor);
+
     }
 
     public void trasladar(int dx, int dy) {
@@ -95,8 +88,7 @@ public class Stickman {
             puntos.set(i, new Point(p.x + dx, p.y + dy));
         }
         
-        // Esto es opcional, ya que la traslación simple no debería deformar la cabeza
-        // Pero lo incluimos por consistencia con los otros métodos
+
         if (dx != 0 || dy != 0) {
             actualizarPuntosCabeza();
         }
@@ -113,15 +105,12 @@ public class Stickman {
             puntos.set(i, new Point(newX, newY));
         }
         
-        // Reconstruir los puntos de la cabeza con el tamaño original
-        // Si queremos que la cabeza también se escale un poco, multiplicamos por un factor más pequeño
-        // Por ejemplo, factor * 0.5 para que la deformación sea menos notoria
-        double factorCabeza = 1.0 + (factor - 1.0) * 0.3; // Escala la cabeza de forma más sutil
-        
-        // Primero actualizamos con la forma base
+
+        double factorCabeza = 1.0 + (factor - 1.0) * 0.3;
+
         actualizarPuntosCabeza();
         
-        // Luego aplicamos un escalado más sutil a la cabeza si se desea
+
         if (factorCabeza != 1.0) {
             for (int i = 1; i <= 8; i++) {
                 Point p = puntos.get(i);
@@ -140,15 +129,14 @@ public class Stickman {
     public void rotar(double angulo, LienzoAnimacion lienzo) {
         Point centro = puntos.get(10); // Torso como centro de rotación
         
-        // Rotar solo el centro de la cabeza y el resto del cuerpo (no los puntos de detalle de la cabeza)
         puntos.set(0, lienzo.rotarPunto(puntos.get(0), angulo, centro)); // Centro de la cabeza
         
-        // Rotar el resto del cuerpo desde el índice 9 (cuello) en adelante
+        // Rotar el resto del cuerpo desde el índice 9
         for (int i = 9; i < puntos.size(); i++) {
             puntos.set(i, lienzo.rotarPunto(puntos.get(i), angulo, centro));
         }
         
-        // Reconstruir los puntos de la cabeza basados en la nueva posición del centro
+
         actualizarPuntosCabeza();
     }
 
@@ -158,10 +146,7 @@ public class Stickman {
         return puntos;
     }
     
-    /**
-     * Obtiene un rectángulo que representa el área de colisión del stickman
-     * @return Rectángulo que representa el área de colisión
-     */
+
     public Rectangle2D obtenerRectanguloColision() {
         // Calcular los límites del stickman para detectar colisiones
         int minX = Integer.MAX_VALUE;
@@ -179,26 +164,21 @@ public class Stickman {
         return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
     }
     
-    /**
-     * Actualiza la posición de los puntos de la cabeza basándose en el punto central
-     * Esto mantiene la forma circular de la cabeza independientemente de las transformaciones
-     */
+
     private void actualizarPuntosCabeza() {
         if (puntos == null || puntos.isEmpty()) {
-            return; // Protección contra errores
+            return;
         }
         
         Point centro = puntos.get(0);
         if (centro == null) {
-            return; // Protección contra puntos nulos
+            return;
         }
         
-        // Usar constantes para las dimensiones de la cabeza
         final int RADIO_X = 20;
         final int RADIO_Y = 20;
         
-        // Actualizar puntos de la cabeza basándose en el centro y distancias fijas
-        // Usando una forma más elíptica para mejor apariencia
+
         puntos.set(1, new Point(centro.x - (int)(RADIO_X * 0.75), centro.y - (int)(RADIO_Y * 0.75))); // cabeza superior izquierda
         puntos.set(2, new Point(centro.x, centro.y - RADIO_Y));                  // cabeza superior centro
         puntos.set(3, new Point(centro.x + (int)(RADIO_X * 0.75), centro.y - (int)(RADIO_Y * 0.75))); // cabeza superior derecha

@@ -21,7 +21,7 @@ public class LienzoAnimacion extends Canvas {
     private int ancho = 1500;
     private int alto = 1000;
     
-    // Letras arrastrables
+
     private ArrayList<LetraArrastrable> letras = new ArrayList<>();
     private LetraArrastrable letraSeleccionada = null;
     
@@ -29,19 +29,19 @@ public class LienzoAnimacion extends Canvas {
         setBackground(Color.ORANGE);
         stickman = new Stickman(100, 500);
         
-        // Crear letras interactivas - posicionadas en la parte superior
+
         letras.add(new LetraArrastrable('P', 100, 100, new Color(200, 50, 50), "pausar"));
         letras.add(new LetraArrastrable('C', 200, 100, new Color(50, 200, 50), "continuar"));
         letras.add(new LetraArrastrable('T', 300, 100, new Color(50, 50, 200), "terminar"));
         
-        // Configurar manejadores de eventos del mouse
+
         configurarEventosMouse();
         
-        // Crear el buffer para doble búfer
+
         offscreenBuffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
         offscreenGraphics = offscreenBuffer.createGraphics();
         
-        // Configurar la calidad del renderizado
+
         offscreenGraphics.setRenderingHint(
             RenderingHints.KEY_ANTIALIASING, 
             RenderingHints.VALUE_ANTIALIAS_ON);
@@ -49,9 +49,7 @@ public class LienzoAnimacion extends Canvas {
         iniciarAnimacion();
     }
     
-    /**
-     * Configura los manejadores de eventos del mouse para arrastrar las letras
-     */
+
     private void configurarEventosMouse() {
         // Manejar clic del mouse (para seleccionar una letra)
         addMouseListener(new MouseAdapter() {
@@ -164,7 +162,7 @@ public class LienzoAnimacion extends Canvas {
             letra.dibujar((Graphics2D)offscreenGraphics);
         }
         
-        // Dibujar estado actual de la animación
+
         offscreenGraphics.setColor(Color.BLACK);
         offscreenGraphics.setFont(new Font("Arial", Font.BOLD, 16));
         if (animador != null) {
@@ -174,12 +172,12 @@ public class LienzoAnimacion extends Canvas {
         
         // Dibujar instrucciones
         offscreenGraphics.setFont(new Font("Arial", Font.PLAIN, 14));
-        offscreenGraphics.drawString("Arrastra las letras hasta el Stickman para controlar la animación:", 300, 30);
+        offscreenGraphics.drawString("Arrastra las letras", 300, 30);
         offscreenGraphics.drawString("P = Pausar la animación", 300, 50);
         offscreenGraphics.drawString("C = Continuar la animación", 300, 70);
         offscreenGraphics.drawString("T = Terminar la animación", 300, 90);
         
-        // Mostrar información de colisiones
+
         if (animador != null) {
             for (LetraArrastrable letra : letras) {
                 if (letra.colisionaCon(stickman)) {
@@ -191,7 +189,7 @@ public class LienzoAnimacion extends Canvas {
             }
         }
         
-        // Copiar el buffer a la pantalla
+
         g.drawImage(offscreenBuffer, 0, 0, this);
     }
     
@@ -202,10 +200,7 @@ public class LienzoAnimacion extends Canvas {
         return new Point(x, y);
     }
     
-    /**
-     * Obtiene el animador del stickman
-     * @return Referencia al animador
-     */
+
     public AnimadorStickman getAnimador() {
         return animador;
     }

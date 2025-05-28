@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 
-/**
- * Clase que representa una letra que puede ser arrastrada en el lienzo
- * y que puede interactuar con el stickman.
- */
+
 public class LetraArrastrable {
     private char letra;
     private ArrayList<Point> puntos; // Puntos que forman la letra
@@ -17,32 +14,23 @@ public class LetraArrastrable {
     private String accion;
     private int grosorLinea = 4;
     
-    /**
-     * Constructor de la letra arrastrable
-     * @param letra Carácter a mostrar
-     * @param x Posición inicial en X
-     * @param y Posición inicial en Y
-     * @param color Color de la letra
-     * @param accion Acción asociada a la letra (pausa, continua, termina)
-     */
+
     public LetraArrastrable(char letra, int x, int y, Color color, String accion) {
         this.letra = letra;
         this.posicionCentral = new Point(x, y);
         this.color = color;
         this.accion = accion;
-        
-        // Inicializar los puntos según la letra
+
+
         inicializarPuntos();
     }
     
-    /**
-     * Inicializa los puntos para formar la letra
-     */
+
     private void inicializarPuntos() {
         puntos = new ArrayList<>();
         int baseX = posicionCentral.x;
         int baseY = posicionCentral.y;
-        int tam = 30; // Tamaño de la letra
+        int tam = 30;
         
         switch(letra) {
             case 'P':
@@ -80,19 +68,16 @@ public class LetraArrastrable {
         }
     }
     
-    /**
-     * Dibuja la letra en el lienzo usando GeneralPath
-     * @param g Contexto gráfico donde dibujar
-     */
+
     public void dibujar(Graphics2D g) {
-        // Guardar configuración original
+
         Stroke strokeOriginal = g.getStroke();
         Color colorOriginal = g.getColor();
         
-        // Configurar para calidad
+
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // Crear el path para la letra
+
         GeneralPath path = new GeneralPath();
         
         if (puntos.size() > 1) {
@@ -129,25 +114,25 @@ public class LetraArrastrable {
             }
         }
         
-        // Dibujar fondo si está seleccionada
+
         if (seleccionada) {
             g.setColor(color.brighter());
             
-            // Crear un área alrededor de la letra
+
             Area area = crearAreaLetra();
             g.fill(area);
         }
         
-        // Dibujar la letra
+
         g.setColor(color);
         g.setStroke(new BasicStroke(grosorLinea, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.draw(path);
         
-        // Restaurar configuración
+
         g.setStroke(strokeOriginal);
         g.setColor(colorOriginal);
         
-        // Dibujar puntos para debug (opcional)
+
         if (seleccionada) {
             g.setColor(Color.RED);
             for (Point p : puntos) {
@@ -156,11 +141,9 @@ public class LetraArrastrable {
         }
     }
     
-    /**
-     * Crea un área alrededor de la letra para mostrar selección
-     */
+
     private Area crearAreaLetra() {
-        // Crear un área basada en el contorno de la letra
+
         int minX = Integer.MAX_VALUE;
         int minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
@@ -181,44 +164,30 @@ public class LetraArrastrable {
                 20, 20));
     }
     
-    /**
-     * Verifica si un punto está dentro de la letra
-     * @param px Coordenada X del punto
-     * @param py Coordenada Y del punto
-     * @return true si el punto está dentro de la letra
-     */
+
     public boolean contienePunto(int px, int py) {
-        // Crear un área de interacción más amplia alrededor de la letra
         Area area = crearAreaLetra();
         return area.contains(px, py);
     }
     
-    /**
-     * Mueve la letra a una nueva posición
-     * @param px Nueva coordenada X central
-     * @param py Nueva coordenada Y central
-     */
+
     public void mover(int px, int py) {
-        // Calcular el desplazamiento
+
         int dx = px - posicionCentral.x;
         int dy = py - posicionCentral.y;
         
-        // Aplicar desplazamiento a todos los puntos
+
         for (int i = 0; i < puntos.size(); i++) {
             Point p = puntos.get(i);
             puntos.set(i, new Point(p.x + dx, p.y + dy));
         }
         
-        // Actualizar posición central
+
         posicionCentral.x = px;
         posicionCentral.y = py;
     }
-    
-    /**
-     * Verifica si la letra colisiona con el stickman usando detección manual
-     * @param stickman Referencia al stickman
-     * @return true si hay colisión
-     */
+
+
     public boolean colisionaCon(Stickman stickman) {
         ArrayList<Point> puntosStickman = stickman.getPuntos();
         
@@ -235,7 +204,7 @@ public class LetraArrastrable {
             if (p.y > maxYLetra) maxYLetra = p.y;
         }
         
-        // Verificar si algún punto del stickman está dentro de los límites de la letra
+
         for (Point punto : puntosStickman) {
             if (punto.x >= minXLetra && punto.x <= maxXLetra && 
                 punto.y >= minYLetra && punto.y <= maxYLetra) {
@@ -243,7 +212,7 @@ public class LetraArrastrable {
             }
         }
         
-        // Verificar si algún punto de la letra está dentro de los límites del stickman
+
         int minXStickman = Integer.MAX_VALUE;
         int minYStickman = Integer.MAX_VALUE;
         int maxXStickman = Integer.MIN_VALUE;
@@ -265,8 +234,7 @@ public class LetraArrastrable {
         
         return false;
     }
-    
-    // Getters y setters
+
     
     public void setSeleccionada(boolean seleccionada) {
         this.seleccionada = seleccionada;
