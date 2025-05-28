@@ -30,6 +30,7 @@ public class VentanaAnimacion extends javax.swing.JFrame {
         }
 
         this.add(lienzo, BorderLayout.CENTER);
+        lienzo.setVentanaPrincipal(this);
         
 
         this.addWindowListener(new WindowAdapter() {

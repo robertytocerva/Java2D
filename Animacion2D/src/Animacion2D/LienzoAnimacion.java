@@ -20,6 +20,7 @@ public class LienzoAnimacion extends Canvas {
     private Graphics2D offscreenGraphics;
     private int ancho = 1500;
     private int alto = 1000;
+    private javax.swing.JFrame ventanaPrincipal;
     
 
     private ArrayList<LetraArrastrable> letras = new ArrayList<>();
@@ -91,12 +92,24 @@ public class LienzoAnimacion extends Canvas {
                                 }
                                 break;
                             case 'T': // Terminar
-                                if (animador != null) {
-                                    System.out.println("Ejecutando acción: TERMINAR");
-                                    animador.detener();
-                                }
+                                System.out.println("Ejecutando acción: TERMINAR");
+                                // Programar el cierre después de un breve retraso para que se vea la interacción
+                                new Thread(() -> {
+                                    try {
+                                        if (animador != null) {
+                                            animador.detener();
+                                        }
+                                        Thread.sleep(500); // Pequeña pausa antes de cerrar
+                                        cerrarAplicacion();
+                                    } catch (InterruptedException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }).start();
                                 break;
                         }
+                        
+                        // Retornar la letra a su posición inicial después de la colisión
+                        letraSeleccionada.volverAPosicionInicial();
                     } else {
                         System.out.println("No hubo colisión con el stickman");
                     }
@@ -203,5 +216,20 @@ public class LienzoAnimacion extends Canvas {
 
     public AnimadorStickman getAnimador() {
         return animador;
+    }
+    
+    public void setVentanaPrincipal(javax.swing.JFrame ventana) {
+        this.ventanaPrincipal = ventana;
+    }
+    
+    public void cerrarAplicacion() {
+        if (animador != null) {
+            animador.detener();
+        }
+        
+        if (ventanaPrincipal != null) {
+            ventanaPrincipal.dispose();
+            System.exit(0);
+        }
     }
 }

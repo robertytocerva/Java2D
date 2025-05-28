@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 public class LetraArrastrable {
     private char letra;
-    private ArrayList<Point> puntos; // Puntos que forman la letra
-    private Point posicionCentral;   // Punto central para translaciones
+    private ArrayList<Point> puntos;
+    private Point posicionCentral;
+    private Point posicionInicial;
     private Color color;
     private boolean seleccionada = false;
     private String accion;
@@ -18,6 +19,7 @@ public class LetraArrastrable {
     public LetraArrastrable(char letra, int x, int y, Color color, String accion) {
         this.letra = letra;
         this.posicionCentral = new Point(x, y);
+        this.posicionInicial = new Point(x, y);
         this.color = color;
         this.accion = accion;
 
@@ -254,5 +256,9 @@ public class LetraArrastrable {
     
     public ArrayList<Point> getPuntos() {
         return puntos;
+    }
+    
+    public void volverAPosicionInicial() {
+        mover(posicionInicial.x, posicionInicial.y);
     }
 }
