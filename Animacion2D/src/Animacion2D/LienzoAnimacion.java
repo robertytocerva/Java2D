@@ -93,7 +93,7 @@ public class LienzoAnimacion extends Canvas {
                                 break;
                             case 'T': // Terminar
                                 System.out.println("Ejecutando acción: TERMINAR");
-                                // Programar el cierre después de un breve retraso para que se vea la interacción
+
                                 new Thread(() -> {
                                     try {
                                         if (animador != null) {

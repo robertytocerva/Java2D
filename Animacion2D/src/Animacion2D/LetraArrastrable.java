@@ -142,7 +142,7 @@ public class LetraArrastrable {
             }
         }
     }
-    
+
 
     private Area crearAreaLetra() {
 
@@ -150,20 +150,30 @@ public class LetraArrastrable {
         int minY = Integer.MAX_VALUE;
         int maxX = Integer.MIN_VALUE;
         int maxY = Integer.MIN_VALUE;
-        
+
         for (Point p : puntos) {
             if (p.x < minX) minX = p.x;
             if (p.y < minY) minY = p.y;
             if (p.x > maxX) maxX = p.x;
             if (p.y > maxY) maxY = p.y;
         }
-        
+
         // Añadir un margen
         int margen = 10;
-        return new Area(new RoundRectangle2D.Double(
-                minX - margen, minY - margen, 
-                maxX - minX + 2*margen, maxY - minY + 2*margen, 
-                20, 20));
+        ArrayList<Point> areaPuntos = new ArrayList<>();
+        areaPuntos.add(new Point(minX - margen, minY - margen));
+        areaPuntos.add(new Point(maxX + margen, minY - margen));
+        areaPuntos.add(new Point(maxX + margen, maxY + margen));
+        areaPuntos.add(new Point(minX - margen, maxY + margen));
+
+        Path2D areaPath = new Path2D.Double();
+        areaPath.moveTo(areaPuntos.get(0).x, areaPuntos.get(0).y);
+        for (int i = 1; i < areaPuntos.size(); i++) {
+            areaPath.lineTo(areaPuntos.get(i).x, areaPuntos.get(i).y);
+        }
+        areaPath.closePath();
+
+        return new Area(areaPath);
     }
     
 

@@ -147,22 +147,7 @@ public class Stickman {
     }
     
 
-    public Rectangle2D obtenerRectanguloColision() {
-        // Calcular los límites del stickman para detectar colisiones
-        int minX = Integer.MAX_VALUE;
-        int minY = Integer.MAX_VALUE;
-        int maxX = Integer.MIN_VALUE;
-        int maxY = Integer.MIN_VALUE;
-        
-        for (Point p : puntos) {
-            if (p.x < minX) minX = p.x;
-            if (p.y < minY) minY = p.y;
-            if (p.x > maxX) maxX = p.x;
-            if (p.y > maxY) maxY = p.y;
-        }
-        
-        return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
-    }
+
     
 
     private void actualizarPuntosCabeza() {
